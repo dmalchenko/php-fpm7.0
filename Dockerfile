@@ -60,6 +60,7 @@ RUN apt-get install -yqq \
 	php7.0-dev \
 	php7.0-redis \
 	php7.0-memcached \
+	php7.0-xdebug \
 	php7.0-mongodb \
     php7.0-imagick \
     php7.0-fpm \
@@ -82,6 +83,8 @@ COPY php-conf/php.ini /etc/php/7.0/cli/php.ini
 COPY php-conf/php-fpm.ini /etc/php/7.0/fpm/php.ini
 COPY php-conf/php-fpm.conf /etc/php/7.0/fpm/php-fpm.conf
 COPY php-conf/www.conf /etc/php/7.0/fpm/pool.d/www.conf
+
+RUN rm /etc/php/7.0/mods-available/xdebug.ini && rm /etc/php/7.0/fpm/conf.d/20-xdebug.ini
 
 ## Install wkhtmltopdf
 RUN echo "Install wkhtmltopdf and xvfb"
@@ -113,6 +116,6 @@ RUN chmod +x /start.sh
 
 CMD ["/start.sh"]
 
-WORKDIR /var/www/lyberteam
+WORKDIR /var/www/app
 
 EXPOSE 9000
